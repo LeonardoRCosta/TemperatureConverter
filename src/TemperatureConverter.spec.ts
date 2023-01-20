@@ -13,6 +13,16 @@ describe('Convert temperature', () => {
     ).toThrowError('Invalid scale!');
   });
 
+  it('should be able to throw an error if invalid convert scale is provided', () => {
+    expect(() =>
+      temperatureConverter.execute({
+        temperature: 293.15,
+        scale: Scales.celsius,
+        scaleToConvert: 'invalid scale',
+      })
+    ).toThrowError('Invalid convert scale!');
+  });
+
   it('should be able to throw an error if the scale is the same as the scaleToConvert', () => {
     expect(() =>
       temperatureConverter.execute({
