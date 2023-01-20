@@ -11,27 +11,37 @@ interface ConversionRequest {
 }
 
 export class TemperatureConverter {
-  static execute({ temperature, scale, scaleToConvert }: ConversionRequest) {
-    const isValidScale = scale in Scales;
-    const isValidScaleToConvert = scaleToConvert in Scales;
+  validate(scale: string, scaleToConvert: string) {
+    const scales = Object.values(Scales);
 
-    if (!isValidScale || !isValidScaleToConvert)
-      throw new Error('Invalid scale and/or convert scale!');
+    const isValidScale = scales.find((value) => value === scale);
+
+    const isValidScaleToConvert = scales.find(
+      (value) => value === scaleToConvert
+    );
+
+    if (!isValidScale) throw new Error('Invalid scale!');
+
+    if (!isValidScaleToConvert) throw new Error('Invalid convert scale!');
 
     if (scale === scaleToConvert)
       throw new Error(
         "You're trying to convert a temperature to the same scale!"
       );
+  }
 
-    const key = `${scale}to${scaleToConvert}`;
+  execute({ temperature, scale, scaleToConvert }: ConversionRequest) {
+    this.validate(scale, scaleToConvert);
+
+    const key = `${scale}To${scaleToConvert}`;
 
     const conversions: Record<string, number> = {
-      celsiustofahreinheit: temperature * (9 / 5) + 32,
-      celsiustokelvin: temperature + 273.15,
-      fahreinheittocelsius: (temperature - 32) * (5 / 9),
-      fahreinheittokelvin: (temperature - 32) * (5 / 9) + 273.15,
-      kelvintocelsius: temperature - 273.15,
-      kelvintofahreinheit: (temperature - 273.15) * (9 / 5) + 32,
+      celsiusTofahreinheit: temperature * (9 / 5) + 32,
+      celsiusTokelvin: temperature + 273.15,
+      fahreinheitTocelsius: (temperature - 32) * (5 / 9),
+      fahreinheitTokelvin: (temperature - 32) * (5 / 9) + 273.15,
+      kelvinTocelsius: temperature - 273.15,
+      kelvinTofahreinheit: (temperature - 273.15) * (9 / 5) + 32,
     };
 
     const convertedTemperature = conversions[key];
