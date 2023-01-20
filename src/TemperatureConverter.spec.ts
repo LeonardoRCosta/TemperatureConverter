@@ -11,7 +11,7 @@ describe('Convert temperature', () => {
     ).toThrowError("You're trying to convert a temperature to the same scale!");
   });
 
-  it('should be able to convert a temperature in kelvin to celsius and to fahreinheit', async () => {
+  it('should be able to convert a temperature in kelvin to celsius and to fahreinheit', () => {
     expect(
       TemperatureConverter.execute({
         temperature: 180,
@@ -29,7 +29,7 @@ describe('Convert temperature', () => {
     ).toEqual({ kelvin: 180, fahreinheit: -135.67 });
   });
 
-  it('should be able to convert a temperature in celsius to kelvin and to fahreinheit', async () => {
+  it('should be able to convert a temperature in celsius to kelvin and to fahreinheit', () => {
     expect(
       TemperatureConverter.execute({
         temperature: 50,
@@ -47,7 +47,7 @@ describe('Convert temperature', () => {
     ).toEqual({ celsius: 50, fahreinheit: 122 });
   });
 
-  it('should be able to convert a temperature in fahreinheit to celsius and to kelvin', async () => {
+  it('should be able to convert a temperature in fahreinheit to celsius and to kelvin', () => {
     expect(
       TemperatureConverter.execute({
         temperature: 122,
